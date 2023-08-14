@@ -32,4 +32,6 @@ const car = new Car('Tesla');
 ```
 car-di-0.js hosted at https://gist.github.com/ViktorKukurba/380769b2d8b45f5b261f12974f00493a/raw/fa987270f625a0f9c3d7b4acb17cee682e727b78/car-di-0.js
 
+Our task is to get rid of the dependency of the ```Engine``` class inside the ```Car``` class. By dependency we mean the creation of an ```Engine``` instance inside the ```Car``` constructor. The ```Car``` property ```this.engine``` still must be an instance of ```Engine```.
+
 == WE ARE HERE ==
