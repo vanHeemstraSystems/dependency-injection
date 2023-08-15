@@ -82,3 +82,44 @@ Here, we define the ```ILogger``` and ```ConsoleLogger``` classes as before. We 
 We then create an instance of ```ConsoleLogger``` and pass it to the ```UserService``` constructor to create an instance of the ```UserService``` class with the dependency properly injected.
 
 While this approach works for simple cases, it can become cumbersome to manage dependencies for larger applications. A dependency injection library like Tsyringe can help simplify the process and provide additional features like automatic injection and type safety.
+
+## Examples
+
+### Example without Interfaces
+
+Since classes have type information at runtime, we can resolve them without any extra information.
+
+```
+// Foo.ts
+export class Foo {}
+```
+
+```
+// Bar.ts
+import {Foo} from "./Foo";
+import {injectable} from "tsyringe";
+
+@injectable()
+export class Bar {
+  constructor(public myFoo: Foo) {}
+}
+```
+
+```
+// main.ts
+import "reflect-metadata";
+import {container} from "tsyringe";
+import {Bar} from "./Bar";
+
+const myBar = container.resolve(Bar);
+// myBar.myFoo => An instance of Foo
+```
+
+You can run above example as follows from ```src/tsyringe/ex_without_interfaces/```:
+
+```
+$ npm i
+$ tsc main.ts
+```
+
+== WE ARE HERE ==
