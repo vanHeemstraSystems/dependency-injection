@@ -15,5 +15,3 @@ See [README.md](./300/README.md)
 ## 400 - Tsyringe
 
 See [README.md](./400/README.md)
-
-== WE ARE HERE ==
