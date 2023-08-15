@@ -7,6 +7,8 @@ Based on "Dependency Injection, The Best Pattern" at https://www.youtube.com/wat
 
 Based on "JavaScript dependency injection in Node – friend or foe?" at https://tsh.io/blog/dependency-injection-in-node-js/.
 
+Based on "Advantages of Tsyringe to ordinary Dependency Injection" at https://pandaquests.medium.com/advantages-of-tsyringe-to-ordinary-dependency-injection-f68f4e597329
+
 ## 100 - Introduction
 
 See [README.md](./100/README.md)
