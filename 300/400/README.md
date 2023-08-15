@@ -43,4 +43,42 @@ const userService = container.resolve<UserService>(UserService);
 userService.registerUser("John", "john@example.com", "password");
 ```
 
-== WE ARE HERE ==
+Here, we define an ```ILogger``` interface and a ```ConsoleLogger``` class that implements it. We also define a ```UserService``` class that has a dependency on ```ILogger```. We use the ```@injectable``` decorator to mark the classes as injectable, and the ```@inject``` decorator to specify the dependency for the ```UserService``` class.
+
+We then use the ```container.register``` method to register the ```ILogger``` dependency with the ```ConsoleLogger``` implementation. Finally, we use the ```container.resolve``` method to create an instance of the ```UserService``` class with its dependencies properly injected.
+
+Without using a dependency injection library like Tsyringe, you can implement dependency injection in TypeScript using a constructor or property injection.
+
+Here’s an example of how you can implement dependency injection without Tsyringe:
+
+```
+interface ILogger {
+  log(message: string): void;
+}
+
+class ConsoleLogger implements ILogger {
+  log(message: string): void {
+    console.log(message);
+  }
+}
+class UserService {
+  private logger: ILogger;
+  constructor(logger: ILogger) {
+    this.logger = logger;
+  }
+  public registerUser(name: string, email: string, password: string): void {
+    // Register user logic...
+    this.logger.log(`User ${name} registered successfully`);
+  }
+}
+
+const logger = new ConsoleLogger();
+const userService = new UserService(logger);
+userService.registerUser("John", "john@example.com", "password");
+```
+
+Here, we define the ```ILogger``` and ```ConsoleLogger``` classes as before. We also define the ```UserService``` class, but this time we inject the ```ILogger``` dependency using the constructor.
+
+We then create an instance of ```ConsoleLogger``` and pass it to the ```UserService``` constructor to create an instance of the ```UserService``` class with the dependency properly injected.
+
+While this approach works for simple cases, it can become cumbersome to manage dependencies for larger applications. A dependency injection library like Tsyringe can help simplify the process and provide additional features like automatic injection and type safety.
