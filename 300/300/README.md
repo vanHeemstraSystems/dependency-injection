@@ -36,12 +36,39 @@ interface IVehicle {
 const TYPES = {
    Configuration: Symbol.for('Configuration'),
    Vehicle: Symbol.for('Vehicle')
+}
 ```
+di-abstraction-layer.ts at https://gist.github.com/ViktorKukurba/429d20447f776d6161208044e73e6cc4#file-di-abstraction-layer-ts
 
 We’ve defined the interfaces which our program will depend on. Also, there should be no dependency on the specific implementation of these interfaces.
 
-In the next step, consider the trivial implementation of the described abstractions.
+In the next step, consider the trivial **implementation** of the described abstractions.
 
+```
+@injectable()
+class SConfiguration implements IConfiguration {
+   model = 'Model S';
+   color = 'white'
+}
+
+@injectable()
+class XConfiguration implements IConfiguration {
+   model = 'Model X';
+   color = 'black'
+}
+
+
+@injectable()
+class Car implements IVehicle {
+   constructor(@inject(TYPES.Configuration) private configuration: IConfiguration) {}
+
+   get description() {
+       const c = this.configuration;
+       return `Car: ${c.model}, ${c.color}.`;
+   }
+}
+```
+di-implementation-layer.ts hosted at https://gist.github.com/ViktorKukurba/d62e47df84a60de165ab63220f05dbd2#file-di-implementaion-layer-ts
 
 So, here we have three classes decorated with @injectable() that allow us to link them to the abstract layer in the next step.
 
