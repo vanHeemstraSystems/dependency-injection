@@ -5,6 +5,8 @@ Based on "Dependency Injection and Inversion of Control in JavaScript" at https:
 
 Based on "Dependency Injection, The Best Pattern" at https://www.youtube.com/watch?v=J1f5b4vcxCQ and https://www.patreon.com/codeaesthetic
 
+Based on "JavaScript dependency injection in Node – friend or foe?" at https://tsh.io/blog/dependency-injection-in-node-js/.
+
 ## 100 - Introduction
 
 See [README.md](./100/README.md)
