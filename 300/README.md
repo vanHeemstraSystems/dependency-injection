@@ -78,5 +78,64 @@ car.engine = new Engine();
 ```
 car-di-si.js hosted at https://gist.github.com/ViktorKukurba/ddfdb583c54e84649912175ab30cfbdb#file-car-di-si-js
 
+In this case, the situation is possible when the client instance is already in use and the dependency is not set yet; on the other hand, it is possible to create and use the client without dependency or to replace the dependency in the process of executing the code.
+
+## 300 - Interface Injection
+
+An Interface Injection requires the implementation of an interface which is a set of methods or setters that stores dependencies within the client. The outer scope or special injector uses this interface to communicate with the client by setting or replacing dependencies.
+
+As JS does not support interfaces we will consider the TypeScript example. In case of pure JavaScript, this interface can be maintained at the level of the conventions between the engineers, or by the creation of the base class.
+
+```
+interface EngineSetter {
+   setEngine(engine: Engine): void;
+}
+
+class Car implements EngineSetter {
+   private model: string;
+   private engine: Engine;
+   constructor(model: string) {
+       this.model = model;
+   }
+
+   public setEngine(val: Engine): void {
+       this.engine = val;
+   }
+}
+
+class Engine {
+   private config: string;
+   constructor(config: string) {
+       this.config = config
+   }
+}
+
+// Injector class
+class EngineInjector {
+    private clients: EngineSetter[] = [];
+    public inject(client: EngineSetter): void {
+        this.clients.push(client);
+        client.setEngine(new Engine('default'));
+    }
+    public updateEngine(engine: Engine): void {
+       this.clients.forEach(client => client.setEngine(engine));
+    }
+}
+
+const teslaS1 = new Car('Tesla model s');
+const teslaS2 = new Car('Tesla model s');
+const teslaS3 = new Car('Tesla model s');
+
+const injector = new EngineInjector();
+
+injector.inject(teslaS1);
+injector.inject(teslaS2);
+injector.inject(teslaS3);
+
+injector.updateEngine(new Engine('ultimate'));
+```
+car-di-ii.js hosted at https://gist.github.com/ViktorKukurba/92b4aaba997786058d6361748376f8f3#file-car-di-ii-ts
+
+This option works well for the family of classes that may have the same dependency, which in certain situations needs to be updated in all the clients.
 
 == WE ARE HERE ==
