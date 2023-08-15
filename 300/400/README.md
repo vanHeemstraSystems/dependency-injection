@@ -119,6 +119,7 @@ You can run above example as follows from ```src/tsyringe/ex-without-interfaces/
 
 ```
 $ npm i
+$ cd src
 $ tsc main.ts
 ```
 
