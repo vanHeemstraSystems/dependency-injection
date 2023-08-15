@@ -36,7 +36,7 @@ Our task is to get rid of the dependency of the ```Engine``` class inside the ``
 
 So, in the next step, we will consider three options for solving this problem using DI:
 
-## 100 - Constructor injection. 
+## 100 - Constructor Injection. 
 
 In this case, the dependency is passed as a parameter in the constructor method.
 
@@ -50,5 +50,33 @@ class Car {
 const car = new Car('Tesla',  new Engine());
 ```
 car-di-ci.js hosted at https://gist.github.com/ViktorKukurba/821c4b74c9c3e6f8bfe18a475884635c#file-car-di-ci-js
+
+Here, the context in which the client is created is responsible for the creation of the dependency instance. The advantage of this approach is that after creating an instance, all of its composite parts (dependencies) are defined to the client. However, there is no opportunity to change the value of dependency without creating special methods, and it is necessary to have references to instances of dependencies before the creation of a client.
+
+## 200 - Setter Injection 
+
+This requires to implement a setter that transfers dependency on the client that is used:
+
+```
+class Car {
+   constructor(model) {
+       this._model = model;
+       this.engine = null;
+   }
+
+   set engine(val) {
+       if (val instanceof Engine) {
+           this.engine = val;
+       } else {
+           throw new Error(`${val} should be instance of Engine`);
+       }
+   }
+}
+
+const car = new Car('Tesla');
+car.engine = new Engine();
+```
+car-di-si.js hosted at https://gist.github.com/ViktorKukurba/ddfdb583c54e84649912175ab30cfbdb#file-car-di-si-js
+
 
 == WE ARE HERE ==
