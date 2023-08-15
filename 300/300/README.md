@@ -38,7 +38,7 @@ const TYPES = {
    Vehicle: Symbol.for('Vehicle')
 }
 ```
-di-abstraction-layer.ts at https://gist.github.com/ViktorKukurba/429d20447f776d6161208044e73e6cc4#file-di-abstraction-layer-ts
+di-abstraction-layer.ts hosted at https://gist.github.com/ViktorKukurba/429d20447f776d6161208044e73e6cc4#file-di-abstraction-layer-ts
 
 We’ve defined the interfaces which our program will depend on. Also, there should be no dependency on the specific implementation of these interfaces.
 
@@ -70,29 +70,45 @@ class Car implements IVehicle {
 ```
 di-implementation-layer.ts hosted at https://gist.github.com/ViktorKukurba/d62e47df84a60de165ab63220f05dbd2#file-di-implementaion-layer-ts
 
-So, here we have three classes decorated with @injectable() that allow us to link them to the abstract layer in the next step.
+So, here we have three classes decorated with ```@injectable()``` that allow us to link them to the abstract layer in the next step.
 
-It is common to implement the mapping (configuration) in the separate program file.
+It is common to implement the mapping (**configuration**) in the separate program file.
 
+```
 container.bind<IConfiguration>(TYPES.Configuration).to(SConfiguration);
 container.bind<IVehicle>(TYPES.Vehicle).to(Car);
+```
+
 You can also implement an interface in this configuration file for changing implementations in run-time, depending on build, environment settings, or other external factors. An alternative option will be to connect different configuration files — abstraction mapping to one implementation or another one based on the described conditions.
+
 Let’s illustrate it with an example of dynamic dependency change (a function is implemented in a configuration file)
 
+```
 export function useXConfig() {
   container.unbind(TYPES.Configuration);
   container.bind<IConfiguration>(TYPES.Configuration).to(XConfiguration);
 }
+```
+
 The main program code will not change.
 
+```
 export function main() {
   const myCar = container.get<IVehicle>(TYPES.Vehicle);
   console.log(`myCar: ${myCar.description}`);
 }
+```
+
 In the current case, we will get
 
+```
 main(); // myCar: Model S white
-But after executing the function useXConfig(); that can be executed by specific properties of the environment, behavior, user location, build settings, etc., we get
+```
 
+But after executing the function ```useXConfig();``` that can be executed by specific properties of the environment, behavior, user location, build settings, etc., we get
+
+```
 main(); // carX: Model X black
-The trivial example described above is intended to show a program code consisting of abstraction, implementation, configuration, and main program, which has no dependencies on implementations. Usually, most changes occur in the main program and implementations. The abstraction and configuration ensure the stable and correct operation of the system, that is constantly updated, expanded, tested and executed in different environments.
+```
+
+The trivial example described above is intended to show a program code consisting of **abstraction**, **implementation**, **configuration**, and **main** program, which has no dependencies on implementations. Usually, most changes occur in the main program and implementations. The abstraction and configuration ensure the stable and correct operation of the system, that is constantly updated, expanded, tested and executed in different environments.
