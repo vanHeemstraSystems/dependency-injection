@@ -115,7 +115,7 @@ const myBar = container.resolve(Bar);
 // myBar.myFoo => An instance of Foo
 ```
 
-You can run above example as follows from ```src/tsyringe/ex_without_interfaces/```:
+You can run above example as follows from ```src/tsyringe/ex-without-interfaces/```:
 
 ```
 $ npm i
