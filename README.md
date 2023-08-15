@@ -3,6 +3,8 @@ dependency-injection
 
 Based on "Dependency Injection and Inversion of Control in JavaScript" at https://viktor-kukurba.medium.com/dependency-injection-and-inversion-of-control-in-javascript-303e07e7f43f
 
+Based on "Dependency Injection, The Best Pattern" at https://www.youtube.com/watch?v=J1f5b4vcxCQ and https://www.patreon.com/codeaesthetic
+
 ## 100 - Introduction
 
 See [README.md](./100/README.md)
